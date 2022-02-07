@@ -1,0 +1,37 @@
+char data[] = "1176,419,1175,420,1174,420,409,1213,410,1213,1173,422,1173,420,410,1220,409,1213,411,1214,1172,422,1172,420,411,1214,1171,423,407,1215,410,1218,408,1215,408,1216,408,1214,407,1215,1172,422,408,1213,410,1213,409,1213,409,12008";//transmit data with delay every cycle chance 0>1
+unsigned int indexID = 0; //indexID
+char *microDelaydata[500]; //microDelaydata
+char *temp_data = NULL; //temp_data
+#define transmitPin D5
+int transfer = LOW; //0101010100101
+
+void setup() {
+  //serial begin
+  Serial.begin(115200);
+  pinMode(transmitPin, OUTPUT);
+
+  temp_data = strtok(data, ",");  // delimiter
+  while (temp_data != NULL){
+    microDelaydata[indexID] = temp_data;
+    indexID++;
+    temp_data = strtok(NULL, ",");
+  }
+  Serial.println("Data analyzed..");
+   for (int n = 0; n < indexID; n++){
+      Serial.print(n);
+      Serial.print(" - ");
+      Serial.println(microDelaydata[n]);
+   }
+}
+
+void loop() {
+     
+  for (int n = 0; n < 10; n++){
+    for (int n = 0; n < indexID; n++){
+          digitalWrite(transmitPin, !digitalRead(transmitPin));
+          int delayseconsishere= String(microDelaydata[n]).toInt();
+          delayMicroseconds(delayseconsishere);
+        }
+  }
+
+}

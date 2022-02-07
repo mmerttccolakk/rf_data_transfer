@@ -1,0 +1,27 @@
+char data[] = "0,71,20,996.40,15";//transmit data with delay every cycle chance 0>1
+unsigned int indexID = 0; //indexID
+char *microDelaydata[500]; //microDelaydata
+char *temp_data = NULL; //temp_data
+
+
+void setup() {
+  //serial begin
+  Serial.begin(115200);
+  temp_data = strtok(data, ",");  // delimiter
+  while (temp_data != NULL){
+    microDelaydata[indexID] = temp_data;
+    indexID++;
+    temp_data = strtok(NULL, ",");
+  }
+  Serial.println("Data analyzed..");
+   for (int n = 0; n < indexID; n++){
+      Serial.print(n);
+      Serial.print(" - ");
+      Serial.println(microDelaydata[n]);
+   }
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
